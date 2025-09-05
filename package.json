@@ -3,10 +3,30 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "dependencies": {
     "electron": "^38.0.0",
+    "electron-updater": "^6.6.2",
     "papaparse": "^5.5.3"
+  },
+  "devDependencies": {
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.tuempresa.scoutsapp",
+    "win": {
+      "target": "nsis"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "jampuerocacic",
+        "repo": "scouts_Piramide_yango",
+        "private": true,
+        "token": "${GH_TOKEN}"
+      }
+    ]
   }
 }
