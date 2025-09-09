@@ -14,6 +14,11 @@ function createWindow() {
 
   win.loadFile("index.html");
 
+   // Configurar logging antes de usar autoUpdater
+  autoUpdater.logger = require("electron-log");
+  autoUpdater.logger.transports.file.level = "info";
+
+   // Buscar actualizaciones
   autoUpdater.checkForUpdatesAndNotify();
 
   autoUpdater.on("update-downloaded", (info) => {

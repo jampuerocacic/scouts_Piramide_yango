@@ -1,7 +1,7 @@
 const Papa = require('papaparse');
 
 async function loadData() {
-  const url = localStorage.getItem("sheetUrl"); // obtenemos el link guardado
+  const url = localStorage.getItem("sheetUrl"); // link CSV ya transformado
   if (!url) {
     alert("Por favor, ingresa y guarda un link de Google Sheets antes de cargar.");
     return;
@@ -93,18 +93,33 @@ function exportCSV(scouts) {
   document.body.removeChild(link);
 }
 
-// Guardar link en localStorage
+// Guardar link en localStorage (convertir a CSV y detectar pestaña)
 function saveLink() {
-  const urlInput = document.getElementById("sheetUrlInput").value.trim();
+  const urlInput = document.getElementById("sheetLink").value.trim();
   if (!urlInput) {
     alert("Por favor ingresa un link válido.");
     return;
   }
-  localStorage.setItem("sheetUrl", urlInput);
-  alert("✅ Link guardado correctamente.");
+
+  // Extraer el ID de la hoja
+  const idMatch = urlInput.match(/\/d\/([a-zA-Z0-9-_]+)/);
+  if (!idMatch) {
+    alert("No se pudo extraer el ID del link. Asegúrate de pegar un link de Google Sheets válido.");
+    return;
+  }
+  const sheetId = idMatch[1];
+
+  // Extraer el GID de la pestaña (si existe)
+  const gidMatch = urlInput.match(/gid=([0-9]+)/);
+  const gid = gidMatch ? gidMatch[1] : '0'; // si no hay, asumimos la primera pestaña
+
+  // Convertir a link CSV
+  const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+
+  localStorage.setItem("sheetUrl", csvUrl);
+  alert("✅ Link guardado correctamente (convertido a CSV automáticamente).");
 }
 
-// Conectar botones después de que el DOM esté listo
 // Conectar botones después de que el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("loadBtn").addEventListener("click", loadData);
