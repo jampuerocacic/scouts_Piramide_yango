@@ -2,15 +2,24 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>App Scouts</title>
+  <title>App Scouts Yango</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
   <h1>Esquema Scouts</h1>
 
-  <button id="loadBtn">Cargar Datos</button>
+  <!-- Fila 1: Botones principales -->
+  <div class="controls">
+    <button id="loadBtn">Cargar Datos</button>
+    <button id="exportBtn">Exportar CSV</button>
+  </div>
 
-  <button id="exportBtn">Exportar CSV</button>
+  <!-- Fila 2: Link + Guardar -->
+  <div class="link-controls">
+    <input type="text" id="sheetLink" placeholder="Pega tu link de Google Sheets aquí">
+    <button id="saveLinkBtn">Guardar Link</button>
+  </div>
 
   <table id="resultTable">
     <thead>
@@ -30,3 +39,4 @@
   <script src="scouts.js"></script>
 </body>
 </html>
+

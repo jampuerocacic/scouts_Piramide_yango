@@ -1,7 +1,12 @@
 const Papa = require('papaparse');
 
 async function loadData() {
-  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQEP-TPVGkyIspiK1LvXH5Yv_1nKe2thlFayW0qBEfN5uy8WjlWNi6p9X0n6nx-NItLd9it669J162k/pub?gid=0&single=true&output=csv';
+  const url = localStorage.getItem("sheetUrl"); // obtenemos el link guardado
+  if (!url) {
+    alert("Por favor, ingresa y guarda un link de Google Sheets antes de cargar.");
+    return;
+  }
+
   const res = await fetch(url);
   const text = await res.text();
 
@@ -88,16 +93,22 @@ function exportCSV(scouts) {
   document.body.removeChild(link);
 }
 
+// Guardar link en localStorage
+function saveLink() {
+  const urlInput = document.getElementById("sheetUrlInput").value.trim();
+  if (!urlInput) {
+    alert("Por favor ingresa un link válido.");
+    return;
+  }
+  localStorage.setItem("sheetUrl", urlInput);
+  alert("✅ Link guardado correctamente.");
+}
+
+// Conectar botones después de que el DOM esté listo
 // Conectar botones después de que el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("loadBtn").addEventListener("click", loadData);
-
-  document.getElementById("exportBtn").addEventListener("click", () => {
-    if (window.lastScouts) {
-      exportCSV(window.lastScouts);
-    } else {
-      alert("Primero carga los datos");
-    }
-  });
+  document.getElementById("exportBtn").addEventListener("click", () => exportCSV(window.lastScouts || []));
+  document.getElementById("saveLinkBtn").addEventListener("click", saveLink);
 });
 

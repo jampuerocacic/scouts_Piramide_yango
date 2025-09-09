@@ -1,52 +1,85 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    margin: 20px;
-    padding: 0;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  button {
-    display: block;
-    margin: 0 auto 20px auto;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #0078d7;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #005a9e;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-    background: white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  th {
-    background-color: #0078d7;
-    color: white;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #F5F5F5;
+  margin: 20px;
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.4em;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #FF2E00; /* Rojo Yango */
+  letter-spacing: 1px; /* un poco de tracking */
+  text-transform: uppercase; /* opcional: todo en mayúsculas */
+}
+
+
+
+
+/* Fila 1: botones principales */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Fila 2: link + guardar */
+.link-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Botones estilo Yango */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #FF2E00; /* rojo Yango */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #000; /* negro al pasar */
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #FF2E00; /* rojo Yango */
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
