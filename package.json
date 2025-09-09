@@ -16,8 +16,9 @@
   "build": {
     "appId": "com.tuempresa.scoutsapp",
     "win": {
-      "target": "nsis"
-    },
+  "target": "nsis",
+  "artifactName": "scouts-app-Setup-${version}.exe"
+},
     "publish": {
       "provider": "github",
       "owner": "jampuerocacic",
