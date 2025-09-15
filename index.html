@@ -15,11 +15,17 @@
     <button id="exportBtn">Exportar CSV</button>
   </div>
 
-  <!-- Fila 2: Link + Guardar -->
-  <div class="link-controls">
-    <input type="text" id="sheetLink" placeholder="Pega tu link de Google Sheets aquí">
-    <button id="saveLinkBtn">Guardar Link</button>
-  </div>
+ <!-- Fila 2: Link + Guardar + Comisión -->
+<div class="link-controls">
+  <input type="text" id="sheetLink" placeholder="Pega tu link de Google Sheets aquí">
+  <button id="saveLinkBtn">Guardar Link</button>
+</div>
+
+<!-- Fila 3: Comisión -->
+<div class="commission-controls">
+  <label for="commissionInput">Comisión (%):</label>
+  <input type="number" id="commissionInput" value="3" step="0.1" min="0">
+</div>
 
   <table id="resultTable">
     <thead>

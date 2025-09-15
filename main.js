@@ -17,6 +17,7 @@ function createWindow() {
    // Configurar logging antes de usar autoUpdater
   autoUpdater.logger = require("electron-log");
   autoUpdater.logger.transports.file.level = "info";
+  
 
    // Buscar actualizaciones
   autoUpdater.checkForUpdatesAndNotify();

@@ -1,11 +1,19 @@
 const Papa = require('papaparse');
 
 async function loadData() {
-  const url = localStorage.getItem("sheetUrl"); // link CSV ya transformado
+  const url = localStorage.getItem("sheetUrl");
   if (!url) {
     alert("Por favor, ingresa y guarda un link de Google Sheets antes de cargar.");
     return;
   }
+
+  // Leer porcentaje de comisión
+  const commissionPercent = parseFloat(document.getElementById("commissionInput").value);
+  if (isNaN(commissionPercent) || commissionPercent <= 0) {
+    alert("Por favor, ingresa un porcentaje de comisión válido.");
+    return;
+  }
+  const commissionRate = commissionPercent / 100; // convertir a decimal (ej. 3% -> 0.03)
 
   const res = await fetch(url);
   const text = await res.text();
@@ -30,7 +38,7 @@ async function loadData() {
   scouts.forEach(s => (map[s.id] = s));
 
   scouts.forEach(s => {
-    s.directIncome = s.companyIncome * 0.01 / 0.03;
+    s.directIncome = s.companyIncome * 0.01 / commissionRate;
   });
 
   scouts.forEach(s => {
@@ -38,7 +46,7 @@ async function loadData() {
     let share = 0.0025;
     while (current && map[current]) {
       const parent = map[current];
-      parent.descendantIncome += s.companyIncome * share / 0.03;
+      parent.descendantIncome += s.companyIncome * share / commissionRate;
       share /= 2;
       current = parent.parentId;
     }
