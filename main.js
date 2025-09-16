@@ -12,17 +12,47 @@ function createWindow() {
     },
   });
 
+  console.log("🟢 Creando ventana principal...");
   win.loadFile("index.html");
 
-   // Configurar logging antes de usar autoUpdater
+  // Configurar logging de electron-log
   autoUpdater.logger = require("electron-log");
   autoUpdater.logger.transports.file.level = "info";
-  
+  console.log("📝 Logger configurado. Revisando actualizaciones...");
 
-   // Buscar actualizaciones
+  // Forzar logs de electron-log en consola también
+  autoUpdater.logger.info("Iniciando verificación de updates...");
+
+  // Lanzar chequeo de updates
   autoUpdater.checkForUpdatesAndNotify();
 
+  // Eventos de autoUpdater
+  autoUpdater.on("checking-for-update", () => {
+    console.log("🔄 Buscando actualizaciones en GitHub...");
+  });
+
+  autoUpdater.on("update-available", (info) => {
+    console.log(`✅ Actualización encontrada: versión ${info.version}`);
+  });
+
+  autoUpdater.on("update-not-available", (info) => {
+    console.log("ℹ️ No hay actualizaciones disponibles. Info:", info);
+  });
+
+  autoUpdater.on("error", (err) => {
+    console.error("❌ Error al buscar actualización:", err);
+  });
+
+  autoUpdater.on("download-progress", (progress) => {
+    console.log(
+      `⬇️ Progreso descarga: ${Math.round(progress.percent)}% ` +
+      `(${Math.round(progress.transferred / 1024 / 1024)}MB / ` +
+      `${Math.round(progress.total / 1024 / 1024)}MB)`
+    );
+  });
+
   autoUpdater.on("update-downloaded", (info) => {
+    console.log(`📦 Actualización descargada: versión ${info.version}`);
     dialog.showMessageBox(win, {
       type: "info",
       title: "Actualización lista",
@@ -30,19 +60,23 @@ function createWindow() {
       buttons: ["Reiniciar ahora", "Después"],
     }).then((result) => {
       if (result.response === 0) {
+        console.log("🔁 Reiniciando app para instalar update...");
         autoUpdater.quitAndInstall();
+      } else {
+        console.log("⏸ Usuario decidió instalar más tarde.");
       }
     });
   });
-
-  autoUpdater.on("checking-for-update", () => console.log("Buscando actualizaciones..."));
-  autoUpdater.on("update-available", (info) => console.log("Actualización disponible:", info.version));
-  autoUpdater.on("update-not-available", () => console.log("No hay actualizaciones disponibles"));
-  autoUpdater.on("error", (err) => console.error("Error al buscar actualización:", err));
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  console.log("🚀 App lista. Creando ventana...");
+  createWindow();
+});
 
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") app.quit();
+  if (process.platform !== "darwin") {
+    console.log("🛑 Todas las ventanas cerradas. Cerrando app...");
+    app.quit();
+  }
 });
